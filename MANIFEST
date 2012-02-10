@@ -1,0 +1,15 @@
+Changes
+LICENSE
+MANIFEST
+META.json
+META.yml
+Makefile.PL
+README
+dist.ini
+lib/MooX/Cmd.pm
+t/00-load.t
+t/01-simple.t
+t/lib/FirstTestApp.pm
+t/lib/FirstTestApp/Cmd/Test.pm
+t/lib/FirstTestApp/Cmd/Test/Cmd/Test.pm
+t/release-pod-syntax.t
