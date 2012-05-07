@@ -25,9 +25,10 @@ my %WriteMakefileArgs = (
     "Data::Record" => "0.02",
     "Module::Pluggable" => "4.0",
     "Moo" => "0.009013",
+    "Package::Stash" => "0.33",
     "Regexp::Common" => "2011121001"
   },
-  "VERSION" => "0.001",
+  "VERSION" => "0.002",
   "test" => {
     "TESTS" => "t/*.t"
   }
