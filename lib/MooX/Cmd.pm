@@ -3,7 +3,7 @@ BEGIN {
   $MooX::Cmd::AUTHORITY = 'cpan:GETTY';
 }
 {
-  $MooX::Cmd::VERSION = '0.002';
+  $MooX::Cmd::VERSION = '0.003';
 }
 # ABSTRACT: Giving an easy Moo style way to make command organized CLI apps
 
@@ -140,7 +140,7 @@ MooX::Cmd - Giving an easy Moo style way to make command organized CLI apps
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =head1 SYNOPSIS
 

@@ -1,5 +1,78 @@
-Revision history for MooX-Cmd
+==================================================
+Changes from 1739-07-07 00:00:00 +0000 to present.
+==================================================
 
-0.002     2012-05-07 20:16:19 Europe/Berlin
+------------------------------------------
+version 0.003 at 2013-04-20 23:25:10 +0000
+------------------------------------------
 
-0.001     2012-02-11 00:00:31 Europe/Berlin
+  Change: 35958d42953eed37e26836cf5778bb077e614ecc
+  Author: Torsten Raudssus <torsten@raudss.us>
+  Date : 2013-04-21 01:24:58 +0000
+
+    Switched to Author::GETTY, added .travis.yml 
+
+  Change: f70b220deeda4617bb30c67d93a96ac44fc3d780
+  Author: Torsten Raudssus <torsten@raudss.us>
+  Date : 2012-05-07 20:16:28 +0000
+
+    v0.002 
+
+  Change: 2541301dd44f5ee0ab752cb755d61d97c0872389
+  Author: Torsten Raudssus <torsten@raudss.us>
+  Date : 2012-05-07 20:15:55 +0000
+
+    Added requirement for Package::Stash 
+
+  Change: 8e659d1b5d517afa4839011575dc7f581c94b44a
+  Author: Torsten Raudssus <torsten@raudss.us>
+  Date : 2012-05-07 20:14:50 +0000
+
+    Added documentation (hope it works ;) as told hehe) and use of
+    Package::Stash 
+
+  Change: d49f4b4f81153f8b93caeab68a85fda28e0f5fc4
+  Author: Torsten Raudssus <github@raudssus.de>
+  Date : 2012-02-11 00:01:15 +0000
+
+    v0.001 
+
+  Change: 194c35d75b020347387d468ef27f13593821ef16
+  Author: Torsten Raudssus <github@raudssus.de>
+  Date : 2012-02-11 00:00:15 +0000
+
+    Added warning 
+
+  Change: 1557356c36859e34d7b6ec56c3ef45c5fc0f065d
+  Author: Torsten Raudssus <github@raudssus.de>
+  Date : 2012-02-10 23:59:29 +0000
+
+    Still under heavy development... i hate my life ;) 
+
+  Change: 90a859aa2a7295cc5a8e7a039a048a685b13e390
+  Author: Torsten Raudssus <github@raudssus.de>
+  Date : 2012-02-10 05:03:14 +0000
+
+    Ok.... that is not THAT easy ;) problem with command keyword 
+
+  Change: 61a6ef8cfde4a43755fc6edcd39781a666c19215
+  Author: Torsten Raudssus <github@raudssus.de>
+  Date : 2012-02-09 14:53:22 +0000
+
+    More parameters 
+
+  Change: 492701658ba8bf78eec1d8e6166f20ee01340647
+  Author: Torsten Raudssus <github@raudssus.de>
+  Date : 2012-02-09 14:36:56 +0000
+
+    Initial implementation, simple tests are working, stackable works 
+
+  Change: 5e5836b218405a040bc7ed25be3def4b182b5e14
+  Author: Torsten Raudssus <github@raudssus.de>
+  Date : 2012-02-07 19:27:13 +0000
+
+    initial commit 
+
+================
+End of releases.
+================
