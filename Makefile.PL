@@ -21,7 +21,7 @@ my %WriteMakefileArgs = (
   "NAME" => "MooX::Cmd",
   "PREREQ_PM" => {
     "Data::Record" => "0.02",
-    "Module::Pluggable" => "4.0",
+    "Module::Pluggable" => "4.8",
     "Moo" => "0.009013",
     "Package::Stash" => "0.33",
     "Regexp::Common" => "2011121001"
@@ -30,7 +30,7 @@ my %WriteMakefileArgs = (
     "Test::LoadAllModules" => "0.021",
     "Test::More" => "0.98"
   },
-  "VERSION" => "0.003",
+  "VERSION" => "0.004",
   "test" => {
     "TESTS" => "t/*.t"
   }

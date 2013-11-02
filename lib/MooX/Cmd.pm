@@ -3,135 +3,67 @@ BEGIN {
   $MooX::Cmd::AUTHORITY = 'cpan:GETTY';
 }
 {
-  $MooX::Cmd::VERSION = '0.003';
+  $MooX::Cmd::VERSION = '0.004';
 }
 # ABSTRACT: Giving an easy Moo style way to make command organized CLI apps
 
 use strict;
 use warnings;
-use Carp;
-use Module::Pluggable::Object;
-use Regexp::Common;
-use Data::Record;
 use Package::Stash;
 
-my %DEFAULT_OPTIONS = (
-	'creation_chain_methods' => ['new_with_options','new'],
-	'creation_method_name' => 'new_with_cmd',
-	'execute_return_method_name' => 'execute_return',
-	'execute_method_name' => 'execute',
-	'base' => undef,
-);
-
-sub _mkcommand {
-	my ( $package, $base ) = @_;
-	$package =~ s/^${base}:://g;
-	lc($package);
-}
-
 sub import {
-	my ( undef, %import_params ) = @_;
-	my ( %import_options ) = ( %DEFAULT_OPTIONS, %import_params );
+	my ( undef, %import_options ) = @_;
 	my $caller = caller;
+	my @caller_isa;
+	{ no strict 'refs'; @caller_isa = @{"${caller}::ISA"} };
+
+	#don't add this to a role
+	#ISA of a role is always empty !
+	## no critic qw/ProhibitStringyEval/
+	@caller_isa or return;
+
 	my $execute_return_method_name = $import_options{execute_return_method_name};
-	my $execute_method_name = $import_options{execute_method_name};
-	my $base = $import_options{base} ? $import_options{base} : ($caller.'::Cmd');
-	my @creation_chain = ref $import_options{creation_chain_methods} eq 'ARRAY' ? @{$import_options{creation_chain_methods}} : ($import_options{creation_chain_methods});
 
-	# i have no clue why 'only' and 'except' seems to not fulfill what i need or are bugged in M::P - Getty
-	my @cmd_plugins = grep {
-		croak "you need an '".$execute_method_name."' function in ".$_ unless $_->can($execute_method_name);
-		my $class = $_;
-		$class =~ s/${base}:://g;
-		$class =~ /:/ ? 0 : 1;
-	} Module::Pluggable::Object->new(
-		search_path => $base,
-		require => 1,
-	)->plugins;
-	
+	exists $import_options{execute_from_new} or $import_options{execute_from_new} = 1; # set default until we want other way
+
 	my $stash = Package::Stash->new($caller);
-
-	$stash->add_symbol('&'.$execute_return_method_name, sub { shift->{$execute_return_method_name} });
-	$stash->add_symbol('&'.$import_options{creation_method_name}, sub {
-		my ( $class, %params ) = @_;
-
-		my @moox_cmd_chain = defined $params{__moox_cmd_chain} ? @{$params{__moox_cmd_chain}} : ();
-		
-		my %create_params;
-
-		my %cmds;
-		
-		for my $cmd_plugin (@cmd_plugins) {
-			$cmds{_mkcommand($cmd_plugin,$base)} = $cmd_plugin;
-		}
-		
-		my $opts_record = Data::Record->new({
-			split  => qr{\s+},
-			unless => $RE{quoted},
-		});
-
-		my @args = $opts_record->records(join(' ',@ARGV));
-
-		my @used_args;
-		
-		my $cmd;
-	
-		while (my $arg = shift @args) {
-			if (defined $cmds{$arg}) {
-				$cmd = $cmds{$arg};
-				last;
-			} else {
-				push @used_args, $arg;
-			}
-		}
-		
-		my $creation_method;
-		for (@creation_chain) {
-			$creation_method = $caller->can($_);
-			last if $creation_method;
-		}
-		
-		@ARGV = @used_args;
-		my $self = $creation_method->($class, %params);
-		
-		my @execute_return;
-		
-		if ($cmd) {
-			@ARGV = @args;
-			push @moox_cmd_chain, $self;
-			my %cmd_create_params = defined $create_params{$cmd} ? %{$create_params{$cmd}} : ();
-			my $creation_method_name = $import_options{creation_method_name};
-			my $creation_method = $cmd->can($creation_method_name);
-			my $cmd_plugin;
-			if ($creation_method) {
-				$cmd_create_params{__moox_cmd_chain} = \@moox_cmd_chain;
-				$cmd_plugin = $creation_method->($cmd, %cmd_create_params);
-				@execute_return = @{$cmd_plugin->$execute_return_method_name};
-			} else {
-				for (@creation_chain) {
-					if ($creation_method = $cmd->can($_)) {
-						$cmd_plugin = $creation_method->($cmd, %cmd_create_params);
-						last;
-					}
-				}
-				croak "cant find a creation method on ".$cmd unless $creation_method;
-				@execute_return = $cmd_plugin->$execute_method_name(\@ARGV,\@moox_cmd_chain);
-			}
-		} else {
-			@execute_return = $self->$execute_method_name(\@ARGV,\@moox_cmd_chain);
-		}
-
-		$self->{$execute_return_method_name} = \@execute_return;
-		
-		return $self;
+	defined $import_options{execute_return_method_name}
+	  and $stash->add_symbol('&'.$import_options{execute_return_method_name}, sub { shift->{$import_options{execute_return_method_name}} });
+	defined $import_options{creation_method_name}
+	  and $stash->add_symbol('&'.$import_options{creation_method_name}, sub {
+		goto &MooX::Cmd::Role::_initialize_from_cmd;;
 	});
 
+	my $apply_modifiers = sub {
+		$caller->can('_initialize_from_cmd') and return;
+		my $with = $caller->can('with');
+		$with->('MooX::Cmd::Role');
+	};
+	$apply_modifiers->();
+
+	my %default_modifiers = (
+		base => '_build_command_base',
+		execute_method_name => '_build_command_execute_method_name',
+		execute_return_method_name => '_build_command_execute_return_method_name',
+		creation_chain_methods => '_build_command_creation_chain_methods',
+		creation_method_name => '_build_command_execute_method_name',
+		execute_from_new => '_build_command_execute_from_new',
+	);
+
+	my $around;
+	foreach my $opt_key (keys %default_modifiers) {
+		exists $import_options{$opt_key} or next;
+		$around or $around = $caller->can('around');
+		$around->( $default_modifiers{$opt_key} => sub { $import_options{$opt_key} } );
+	}
+
+	return;
 }
 
 1;
 
-
 __END__
+
 =pod
 
 =head1 NAME
@@ -140,7 +72,7 @@ MooX::Cmd - Giving an easy Moo style way to make command organized CLI apps
 
 =head1 VERSION
 
-version 0.003
+version 0.004
 
 =head1 SYNOPSIS
 
@@ -189,6 +121,43 @@ version 0.003
                               # where $myapp_cmd_command_cmd_command == $self
   }
 
+  package MyZapp;
+
+  use Moo;
+  use MooX::Cmd execute_from_new => 0;
+
+  sub execute {
+    my ( $self ) = @_;
+    my @extra_argv = @{$self->command_args};
+    my @chain = @{$self->command_chain} # in this case only ( $myzapp )
+                              # where $myzapp == $self
+  }
+
+  1;
+ 
+  package MyZapp::Cmd::Command;
+  # for "myapp command"
+
+  use Moo;
+  use MooX::Cmd execute_from_new => 0;
+
+  # gets executed on "myapp command" but not on "myapp command command"
+  # there MyApp::Cmd::Command still gets instantiated and for the chain
+  sub execute {
+    my ( $self ) = @_;
+    my @extra_argv = @{$self->command_args};
+    my @chain = @{$self->command_chain} # in this case ( $myzapp, $myzapp_cmd_command )
+                              # where $myzapp_cmd_command == $self
+  }
+
+  1;
+  package main;
+
+  use MyApp;
+
+  MyZapp->new_with_cmd->execute();
+  MyApp->new_with_cmd;
+
   1;
 
 =head1 DESCRIPTION
@@ -223,4 +192,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
