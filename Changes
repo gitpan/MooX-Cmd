@@ -3,14 +3,38 @@ Changes from 1740-01-22 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.005 at 2013-11-05 19:10:55 +0000
+version 0.006 at 2013-11-05 19:13:14 +0000
 ------------------------------------------
+
+  Change: 4396f43078223c989bd9c5cc2734191ebc295d2a
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-05 20:12:38 +0000
+
+    Merge github.com:rehsack/MooX-Cmd 
+
+  Change: c932a0edc9a0ab225b431f21a116af96becfcfa0
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-05 20:11:11 +0000
+
+    v0.005 
 
   Change: fc393333b0f91e30fcc6a8168b67c076ada2c113
   Author: Jens Rehsack <sno@netbsd.org>
   Date : 2013-11-05 07:45:35 +0000
 
     Merge github.com:Getty/p5-moox-cmd into rehsack 
+
+  Change: 25caa31cf72d62cc69eaaf207488ea93427c5e43
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-05 06:59:15 +0000
+
+    correct content of command_name attribute 
+
+  Change: ded34606747f067473f9b778b213a184a0e69e6e
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-03 00:04:10 +0000
+
+    Merge github.com:Getty/p5-moox-cmd 
 
   Change: 474d456a510b53f357b96e346ba45160e554d0be
   Author: Torsten Raudssus <torsten@raudss.us>
