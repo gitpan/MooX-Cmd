@@ -3,7 +3,7 @@ BEGIN {
   $MooX::Cmd::Role::AUTHORITY = 'cpan:GETTY';
 }
 {
-  $MooX::Cmd::Role::VERSION = '0.004';
+  $MooX::Cmd::Role::VERSION = '0.005';
 }
 # ABSTRACT: MooX cli app commands do this
 
@@ -203,7 +203,7 @@ MooX::Cmd::Role - MooX cli app commands do this
 
 =head1 VERSION
 
-version 0.004
+version 0.005
 
 =head1 SYNOPSIS
 
@@ -326,7 +326,7 @@ Torsten Raudssus <torsten@raudss.us>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2012 by Torsten Raudssus.
+This software is copyright (c) 2013 by Torsten Raudssus.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

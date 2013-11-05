@@ -1,10 +1,16 @@
 ==================================================
-Changes from 1740-01-19 00:00:00 +0000 to present.
+Changes from 1740-01-22 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.004 at 2013-11-02 22:06:57 +0000
+version 0.005 at 2013-11-05 19:10:55 +0000
 ------------------------------------------
+
+  Change: fc393333b0f91e30fcc6a8168b67c076ada2c113
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-05 07:45:35 +0000
+
+    Merge github.com:Getty/p5-moox-cmd into rehsack 
 
   Change: 474d456a510b53f357b96e346ba45160e554d0be
   Author: Torsten Raudssus <torsten@raudss.us>
@@ -99,6 +105,85 @@ version 0.004 at 2013-11-02 22:06:57 +0000
 
     whining and let it work smoothly on blead 
 
+  Change: ec640c1ba69d8e52a189767dfe3944d2fbcfdc1b
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-02 22:55:35 +0000
+
+    add some comfort as primary author desires
+
+    To avoid scaring users the Getty wants some improved examples and an
+    accessor for last cmd in chain. 
+
+  Change: 39ac03f9dade418d1c88f90eda86873fbf602b3e
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-01 13:08:20 +0000
+
+    add some samples to role
+
+    author wants ('examples') x INT_MAX - unfortunately he gets only one 
+
+  Change: e4b74eef3bdc5e6d9904f1357e70e82fc759f556
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-01 13:02:34 +0000
+
+    move initialization to MooX::Cmd::Role
+
+    * as discussed with Getty in #web-simple, let MooX::Cmd be a
+    bootstrap
+
+    loader only and modern implementations can do
+
+    with "MooX::Cmd::Role"; * allow modify all initialization parameters
+    via class _build_ functions
+
+    (called in class context, but as method) 
+
+  Change: 7b2cab573584ae6991298e6f8626a94312427c8d
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-10-31 20:38:00 +0000
+
+    improve documentation 
+
+  Change: 3a485f6effe485dc8f3f22617752e772b5e1a613
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-10-30 18:26:49 +0000
+
+    allow Class->new_with_cmd->execute(...) 
+
+  Change: 45b4c59e4f4b2467106a4546fdf6807176e978a5
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-10-30 18:21:16 +0000
+
+    move initialization sequence for cmd into role
+
+    as discussed with primary author, a role having all neat information
+    about the cmd state in attributes is smarter that passing arguments
+    ... 
+
+  Change: 707f86b6bb9a14d31865e7fa45d247d559b934cf
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-10-30 15:53:47 +0000
+
+    simplify loading commands to avoid stack frames 
+
+  Change: f0532663043704767fed5fcc40a7056f0bcedae6
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-10-30 15:36:42 +0000
+
+    remove trailing \t 
+
+  Change: bb0c7bbb48a20030a23b72d769f35845914a448d
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-10-30 15:31:14 +0000
+
+    some safety first checks and minor optimizations 
+
+  Change: 29a9d19b503186a872f4bc7a1c841cd593e86dd5
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-10-30 07:24:37 +0000
+
+    Merge github.com:Getty/p5-moox-cmd 
+
   Change: 03139b6fb4c4fb003661ceefd3522183d822985f
   Author: Torsten Raudssus <torsten@raudss.us>
   Date : 2013-10-29 11:07:19 +0000
@@ -106,6 +191,20 @@ version 0.004 at 2013-11-02 22:06:57 +0000
     Merge pull request #2 from yanick/master
 
     only load commands if used 
+
+  Change: 07158eec8defbbd90ece5286710d5eff98d647e1
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-10-29 18:36:10 +0000
+
+    allow commands show available neighbours/children 
+
+  Change: 6522c6e0fe8ef5af3ceb6495be735d02c44e081b
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-10-28 15:04:25 +0000
+
+    bump Module::Pluggable version to stop 5.18 from
+
+    whining and let it work smoothly on blead 
 
   Change: 35958d42953eed37e26836cf5778bb077e614ecc
   Author: Torsten Raudssus <torsten@raudss.us>
