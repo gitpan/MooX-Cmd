@@ -3,7 +3,7 @@ BEGIN {
   $MooX::Cmd::Role::AUTHORITY = 'cpan:GETTY';
 }
 {
-  $MooX::Cmd::Role::VERSION = '0.006';
+  $MooX::Cmd::Role::VERSION = '0.006001';
 }
 # ABSTRACT: MooX cli app commands do this
 
@@ -133,7 +133,7 @@ sub _initialize_from_cmd
 	while (my $arg = shift @args) {
 		push @used_args, $arg and next unless $cmd = $params{command_commands}->{$arg};
 
-		my $cmd_name = $arg; # be careful about relics
+		$cmd_name = $arg; # be careful about relics
 		use_module( $cmd );
 		$cmd->can($execute_method_name)
 		  or croak "you need an '".$execute_method_name."' function in ".$cmd;
@@ -203,7 +203,7 @@ MooX::Cmd::Role - MooX cli app commands do this
 
 =head1 VERSION
 
-version 0.006
+version 0.006001
 
 =head1 SYNOPSIS
 

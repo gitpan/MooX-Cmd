@@ -49,7 +49,7 @@
          "web" : "https://github.com/Getty/p5-moox-cmd"
       }
    },
-   "version" : "0.006",
+   "version" : "0.006001",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.018001"

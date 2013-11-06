@@ -23,7 +23,7 @@ requires:
 resources:
   homepage: https://github.com/Getty/p5-moox-cmd
   repository: https://github.com/Getty/p5-moox-cmd.git
-version: 0.006
+version: 0.006001
 x_Dist_Zilla:
   perl:
     version: 5.018001
