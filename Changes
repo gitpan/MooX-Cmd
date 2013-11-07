@@ -1,10 +1,63 @@
 ==================================================
-Changes from 1740-01-23 00:00:00 +0000 to present.
+Changes from 1740-01-24 00:00:00 +0000 to present.
 ==================================================
 
----------------------------------------------
-version 0.006001 at 2013-11-06 14:15:11 +0000
----------------------------------------------
+------------------------------------------
+version 0.007 at 2013-11-07 21:41:51 +0000
+------------------------------------------
+
+  Change: 4277fc1bfef1d923b359db3603feb9aab88d18b3
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-07 22:40:36 +0000
+
+    improve test coverage of MooX::Cmd::Role 
+
+  Change: 4cd5c44f71d2c97dbe30d5709fc3318d4682338f
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-07 20:52:35 +0000
+
+    100% test coverage of MooX::Cmd 
+
+  Change: 56155528d3463680214507d42a53c5132b3be967
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-07 17:14:00 +0000
+
+    add some documentation for MooX::Cmd::Tester 
+
+  Change: bcf96711d17f6f4ef2fca1c2ccb1372f9a08505d
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-07 15:34:46 +0000
+
+    ignore editor temp files and backup files 
+
+  Change: 47ac05970ee0cc83fd6e1bc13559f51c320cb498
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-07 15:33:32 +0000
+
+    enhance and fix tests 
+
+  Change: 638e1160066019da114e18858623bcb5f7cb272e
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-06 20:55:24 +0000
+
+    Adopt basic tests using tester API 
+
+  Change: 3b22c88ca15a3e98c9221bab12288cf62ce4c1c3
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-06 20:54:22 +0000
+
+    steal some code from App::Cmd::Tester and adopt
+
+    Basic test infrastructure ... needs fine tuning, but first steps are
+    done that way. 
+
+  Change: df7fae3c04dac8aba23a6dd693926cfd16a65fb4
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-06 20:53:40 +0000
+
+    BAIL_OUT when unable to load MooX::Cmd
+
+    No further testing possible nor reasonable 
 
   Change: de7fcb9ab41a68831a8b1664c9d0f1830969014c
   Author: Jens Rehsack <sno@netbsd.org>

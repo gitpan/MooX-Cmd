@@ -3,7 +3,7 @@ BEGIN {
   $MooX::Cmd::AUTHORITY = 'cpan:GETTY';
 }
 {
-  $MooX::Cmd::VERSION = '0.006001';
+  $MooX::Cmd::VERSION = '0.007';
 }
 # ABSTRACT: Giving an easy Moo style way to make command organized CLI apps
 
@@ -29,8 +29,8 @@ sub import {
 	my $stash = Package::Stash->new($caller);
 	defined $import_options{execute_return_method_name}
 	  and $stash->add_symbol('&'.$import_options{execute_return_method_name}, sub { shift->{$import_options{execute_return_method_name}} });
-	defined $import_options{creation_method_name}
-	  and $stash->add_symbol('&'.$import_options{creation_method_name}, sub {
+	defined $import_options{creation_method_name} or $import_options{creation_method_name} = "new_with_cmd";
+	$stash->add_symbol('&'.$import_options{creation_method_name}, sub {
 		goto &MooX::Cmd::Role::_initialize_from_cmd;;
 	});
 
@@ -46,7 +46,7 @@ sub import {
 		execute_method_name => '_build_command_execute_method_name',
 		execute_return_method_name => '_build_command_execute_return_method_name',
 		creation_chain_methods => '_build_command_creation_chain_methods',
-		creation_method_name => '_build_command_execute_method_name',
+		creation_method_name => '_build_command_creation_method_name',
 		execute_from_new => '_build_command_execute_from_new',
 	);
 
@@ -72,7 +72,7 @@ MooX::Cmd - Giving an easy Moo style way to make command organized CLI apps
 
 =head1 VERSION
 
-version 0.006001
+version 0.007
 
 =head1 SYNOPSIS
 

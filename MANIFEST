@@ -8,9 +8,15 @@ README
 dist.ini
 lib/MooX/Cmd.pm
 lib/MooX/Cmd/Role.pm
+lib/MooX/Cmd/Tester.pm
 t/00-load.t
 t/01-simple.t
+t/lib/FailTestApp.pm
+t/lib/FailTestApp/Cmd/nothing.pm
 t/lib/FirstTestApp.pm
 t/lib/FirstTestApp/Cmd/Test.pm
 t/lib/FirstTestApp/Cmd/Test/Cmd/Test.pm
+t/lib/SecondTestApp.pm
+t/lib/SecondTestApp/Cmd/cwo.pm
+t/lib/SecondTestApp/Cmd/ifc.pm
 t/release-pod-syntax.t
