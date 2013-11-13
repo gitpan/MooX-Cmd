@@ -8,7 +8,7 @@ build_requires:
 configure_requires:
   ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 5.005, CPAN::Meta::Converter version 2.132830'
+generated_by: 'Dist::Zilla version 5.006, CPAN::Meta::Converter version 2.132830'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -23,7 +23,7 @@ requires:
 resources:
   homepage: https://github.com/Getty/p5-moox-cmd
   repository: https://github.com/Getty/p5-moox-cmd.git
-version: 0.007
+version: 0.008
 x_Dist_Zilla:
   perl:
     version: 5.018001
@@ -31,59 +31,59 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::GatherDir
       name: '@Author::GETTY/@Basic/GatherDir'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::PruneCruft
       name: '@Author::GETTY/@Basic/PruneCruft'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::ManifestSkip
       name: '@Author::GETTY/@Basic/ManifestSkip'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::MetaYAML
       name: '@Author::GETTY/@Basic/MetaYAML'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::License
       name: '@Author::GETTY/@Basic/License'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::Readme
       name: '@Author::GETTY/@Basic/Readme'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::ExtraTests
       name: '@Author::GETTY/@Basic/ExtraTests'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::ExecDir
       name: '@Author::GETTY/@Basic/ExecDir'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::ShareDir
       name: '@Author::GETTY/@Basic/ShareDir'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::MakeMaker
       name: '@Author::GETTY/@Basic/MakeMaker'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::Manifest
       name: '@Author::GETTY/@Basic/Manifest'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::TestRelease
       name: '@Author::GETTY/@Basic/TestRelease'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::ConfirmRelease
       name: '@Author::GETTY/@Basic/ConfirmRelease'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::UploadToCPAN
       name: '@Author::GETTY/@Basic/UploadToCPAN'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::Git::NextVersion
       name: '@Author::GETTY/Git::NextVersion'
@@ -91,19 +91,19 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::PkgVersion
       name: '@Author::GETTY/PkgVersion'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::MetaConfig
       name: '@Author::GETTY/MetaConfig'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::MetaJSON
       name: '@Author::GETTY/MetaJSON'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::PodSyntaxTests
       name: '@Author::GETTY/PodSyntaxTests'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::Repository
       name: '@Author::GETTY/Repository'
@@ -135,7 +135,7 @@ x_Dist_Zilla:
           phase: test
           type: requires
       name: '@Author::GETTY/TestsOfAuthorGETTY'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::ChangelogFromGit
       name: '@Author::GETTY/ChangelogFromGit'
@@ -173,7 +173,7 @@ x_Dist_Zilla:
           phase: runtime
           type: requires
       name: Prereqs
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::Prereqs
       config:
@@ -181,34 +181,34 @@ x_Dist_Zilla:
           phase: test
           type: requires
       name: TestRequires
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':InstallModules'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':IncModules'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':TestFiles'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':ExecFiles'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':ShareFiles'
-      version: 5.005
+      version: 5.006
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':MainModule'
-      version: 5.005
+      version: 5.006
   zilla:
     class: Dist::Zilla::Dist::Builder
     config:
       is_trial: 0
-    version: 5.005
+    version: 5.006
 x_authority: cpan:GETTY

@@ -3,7 +3,7 @@ BEGIN {
   $MooX::Cmd::AUTHORITY = 'cpan:GETTY';
 }
 {
-  $MooX::Cmd::VERSION = '0.007';
+  $MooX::Cmd::VERSION = '0.008';
 }
 # ABSTRACT: Giving an easy Moo style way to make command organized CLI apps
 
@@ -72,7 +72,7 @@ MooX::Cmd - Giving an easy Moo style way to make command organized CLI apps
 
 =head1 VERSION
 
-version 0.007
+version 0.008
 
 =head1 SYNOPSIS
 
@@ -179,6 +179,24 @@ Repository
 Issue Tracker
 
   http://github.com/Getty/p5-moox-cmd/issues
+
+=head1 THANKS
+
+=over
+
+=item Lukas Mai (mauke), Toby Inkster (tobyink)
+
+Gave some helpful advice for solving difficult issues
+
+=item Celogeek San
+
+Integration into MooX::Options for better help messages and suit team play
+
+=item Torsten Raudssus (Getty)
+
+did the initial work and brought it to CPAN
+
+=back
 
 =head1 AUTHOR
 

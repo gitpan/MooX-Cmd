@@ -1,10 +1,46 @@
 ==================================================
-Changes from 1740-01-24 00:00:00 +0000 to present.
+Changes from 1740-01-30 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.007 at 2013-11-07 21:41:51 +0000
+version 0.008 at 2013-11-13 17:29:50 +0000
 ------------------------------------------
+
+  Change: 9d651fd16851227b7010d79b969f4880e97dd066
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-13 16:45:57 +0000
+
+    groundwork for testing with Mo(o(se)) 
+
+  Change: 1d03792c66e861893a3c51991f24353ea7314e4c
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-13 11:14:00 +0000
+
+    add THANKS section 
+
+  Change: 13178346909c90cc22627066f699aa12c669fef2
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-13 11:13:32 +0000
+
+    final test for MooX::Options 3.99 
+
+  Change: 7a54a5793c90f20b2949d6c76eef67dd9550b478
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-13 10:50:12 +0000
+
+    eliminate hidden/private __moox_cmd_chain param 
+
+  Change: dae399076bca0401e75f7f23a4fbb09e04fb38eb
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-13 08:11:54 +0000
+
+    prepare for MooX::Options 3.99 
+
+  Change: f7e930f69532758bbec8ed9e542e7e3baddff655
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-11-09 22:20:42 +0000
+
+    massively increase test coverage 
 
   Change: 4277fc1bfef1d923b359db3603feb9aab88d18b3
   Author: Jens Rehsack <sno@netbsd.org>

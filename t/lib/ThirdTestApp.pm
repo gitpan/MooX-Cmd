@@ -1,19 +1,16 @@
-package SecondTestApp::Cmd::ifc;
+package ThirdTestApp;
 
 BEGIN {
     my $moodel = $ENV{WHICH_MOODEL} || "Moo";
     eval "use $moodel;"; $@ and die $@;
     $moodel->import;
-
-    __PACKAGE__->can("with")->("MooX::Cmd::Role");
 }
+use MooX::Cmd execute_from_new => undef;
 
 around _build_command_execute_method_name => sub { "run" };
 
-around _build_command_execute_from_new => sub { 1 };
+sub mach_mich_perwoll { goto \&MooX::Cmd::Role::_initialize_from_cmd; }
 
 sub run { @_ }
-
-eval "use MooX::Cmd;";
 
 1;

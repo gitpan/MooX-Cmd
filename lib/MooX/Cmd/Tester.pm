@@ -3,7 +3,7 @@ BEGIN {
   $MooX::Cmd::Tester::AUTHORITY = 'cpan:GETTY';
 }
 {
-  $MooX::Cmd::Tester::VERSION = '0.007';
+  $MooX::Cmd::Tester::VERSION = '0.008';
 }
 # ABSTRACT: MooX cli app commands tester
 
@@ -76,7 +76,7 @@ sub _run_with_capture
     my $stdout = tie local *STDOUT, $hub, 'stdout';
     my $stderr = tie local *STDERR, $hub, 'stderr';
 
-    my ( $execute_rv, $cmd );
+    my ( $execute_rv, $cmd, $cmd_name );
 
     my $ok = eval {
         local $TEST_IN_PROGRESS = 1;
@@ -88,7 +88,8 @@ sub _run_with_capture
         ref $app and $app = ref $app;
         my $test_ident = "$app => [ " . join( " ", @$argv ) . " ]";
         ok( $cmd->isa($app),    "got a '$app' from new_with_cmd" );
-        @$argv and ok( $cmd->command_name, "proper cmd name from $test_ident" );
+	@$argv and defined ($cmd_name = $cmd->command_name) and 
+	    ok( (grep { $_ =~ m/$cmd_name/ } @$argv), "proper cmd name from $test_ident" );
         ok( scalar @{ $cmd->command_chain } <= scalar @$argv,
             "\$#argv vs. command chain length testing $test_ident" );
 	@$argv and ok( $cmd->command_chain_end == $cmd->command_chain->[-1],
@@ -156,7 +157,7 @@ MooX::Cmd::Tester - MooX cli app commands tester
 
 =head1 VERSION
 
-version 0.007
+version 0.008
 
 =head1 SYNOPSIS
 
