@@ -2,11 +2,8 @@ package MooX::Cmd::Tester;
 BEGIN {
   $MooX::Cmd::Tester::AUTHORITY = 'cpan:GETTY';
 }
-{
-  $MooX::Cmd::Tester::VERSION = '0.008';
-}
 # ABSTRACT: MooX cli app commands tester
-
+$MooX::Cmd::Tester::VERSION = '0.009';
 use strict;
 use warnings;
 
@@ -55,13 +52,11 @@ sub test_cmd_ok
 {
     my $rv = test_cmd(@_);
 
+    my $test_ident = $rv->app . " => [ " . join( " ", @{$_[1]} ) . " ]";
+    ok(!$rv->error, "Everythink ok running cmd $test_ident") or diag($rv->error);
     # no error and cmd means, we're reasonable successful so far
-    if($rv and !$rv->error and $rv->cmd)
-    {
-	my $test_ident = $rv->app . " => [ " . join( " ", @{$_[1]} ) . " ]";
-	$rv->cmd->command_name and
-	ok($rv->cmd->command_commands->{$rv->cmd->command_name}, "found command at $test_ident");
-    }
+    $rv and !$rv->error and $rv->cmd and $rv->cmd->command_name and
+      ok($rv->cmd->command_commands->{$rv->cmd->command_name}, "found command at $test_ident");
 
     $rv;
 }
@@ -90,14 +85,21 @@ sub _run_with_capture
         ok( $cmd->isa($app),    "got a '$app' from new_with_cmd" );
 	@$argv and defined ($cmd_name = $cmd->command_name) and 
 	    ok( (grep { $_ =~ m/$cmd_name/ } @$argv), "proper cmd name from $test_ident" );
-        ok( scalar @{ $cmd->command_chain } <= scalar @$argv,
+        ok( scalar @{ $cmd->command_chain } <= 1 + scalar @$argv,
             "\$#argv vs. command chain length testing $test_ident" );
 	@$argv and ok( $cmd->command_chain_end == $cmd->command_chain->[-1],
 	    "command_chain_end ok");
-        $cmd->command_execute_from_new
-          or $cmd->can( $cmd->command_execute_method_name )->($cmd);
-	my @execute_return = @{ $cmd->can($cmd->command_execute_return_method_name)->($cmd) };
-        $execute_rv = \@execute_return;
+	unless($execute_rv = $cmd->execute_return)
+	{
+	    my ($command_execute_from_new, $command_execute_method_name);
+	    my $cce = $cmd->can("command_chain_end");
+	    $cce and $cce = $cce->($cmd);
+	    $cce and $command_execute_from_new = $cce->can("command_execute_from_new");
+	    $command_execute_from_new and $command_execute_from_new = $command_execute_from_new->($cce);
+	    $command_execute_from_new or $command_execute_method_name = $cce->can('command_execute_method_name');
+	    $command_execute_method_name
+	      and $execute_rv = [ $cce->can($command_execute_method_name->($cce))->($cce) ];
+	}
         1;
     };
 
@@ -157,7 +159,7 @@ MooX::Cmd::Tester - MooX cli app commands tester
 
 =head1 VERSION
 
-version 0.008
+version 0.009
 
 =head1 SYNOPSIS
 

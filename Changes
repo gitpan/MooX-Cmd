@@ -1,10 +1,49 @@
 ==================================================
-Changes from 1740-01-30 00:00:00 +0000 to present.
+Changes from 1740-04-26 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.008 at 2013-11-13 17:29:50 +0000
+version 0.009 at 2014-02-08 16:00:22 +0000
 ------------------------------------------
+
+  Change: 0abd26c7a29d6b2d9b225af320891f224194996a
+  Author: Diab Jerius <djerius@cpan.org>
+  Date : 2014-02-01 22:17:39 +0000
+
+    Apply submitted fix for RT#91481 - without test ..
+
+    but with dist.ini updated ... 
+
+  Change: 98feae23ad3c3caa679df82083d6db2daeb63900
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2014-02-01 22:06:58 +0000
+
+    fix RT#91500 - incorrect execute_return if ...
+
+    The implication was wrong, indeed - but the effort was increadible.
+    Testing sucks :P 
+
+  Change: 790ba58bc37a7104576c1bf741b98873e4562ae8
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2014-01-29 07:05:42 +0000
+
+    distinguish between test_cmd and test_cmd_ok 
+
+  Change: f3c3dfcb7586a2922702c91bad012acf0031ad9c
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2014-01-29 07:04:20 +0000
+
+    after chained constructor, we can use getters
+
+    * here: use command_execute_return_method_name getter instead of
+
+    hidden builder call and wasting the result 
+
+  Change: 6077f673f240f71bcdcd6e9e3cb09fef1de4ab2f
+  Author: Jens Rehsack <sno@netbsd.org>
+  Date : 2013-12-02 08:49:48 +0000
+
+    add missing prereqs 
 
   Change: 9d651fd16851227b7010d79b969f4880e97dd066
   Author: Jens Rehsack <sno@netbsd.org>

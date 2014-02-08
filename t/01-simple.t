@@ -34,6 +34,7 @@ for (@tests) {
 	"ARRAY" eq ref $rv->execute_rv or diag(explain($rv));
 	my @execute_return = @{$rv->execute_rv};
 	my @moox_cmd_chain = map { ref $_ } @{$execute_return[2]};
+	push @{$result->[2]}, $result->[0];
 	my $execute_result = [ref $execute_return[0],$execute_return[1],\@moox_cmd_chain];
 	is_deeply($execute_result,$result,'Checking result of "'.join(" ", @$args).'"');
 }
@@ -45,17 +46,17 @@ for (@tests) {
 }
 
 {
-	my $rv = test_cmd_ok( FailTestApp => [qw(nothing)] );
+	my $rv = test_cmd( FailTestApp => [qw(nothing)] );
 	like( $rv->error, qr/need.*execute.*nothing/, "Load fails for FailTestApp => [nothing]" );
 }
 
 {
-	my $rv = test_cmd_ok( FailTestApp => [qw(uncreatable)] );
+	my $rv = test_cmd( FailTestApp => [qw(uncreatable)] );
 	like( $rv->error, qr/Can't find a creation method/, "Load fails for FailTestApp => [nothing]" );
 }
 
 {
-	my $rv = test_cmd_ok( FailTestApp => [qw(nocreatable)] );
+	my $rv = test_cmd( FailTestApp => [qw(nocreatable)] );
 	like( $rv->error, qr/Can't find a creation method/, "Load fails for FailTestApp => [nothing]" );
 }
 

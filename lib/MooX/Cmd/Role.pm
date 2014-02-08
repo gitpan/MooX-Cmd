@@ -2,11 +2,8 @@ package MooX::Cmd::Role;
 BEGIN {
   $MooX::Cmd::Role::AUTHORITY = 'cpan:GETTY';
 }
-{
-  $MooX::Cmd::Role::VERSION = '0.008';
-}
 # ABSTRACT: MooX cli app commands do this
-
+$MooX::Cmd::Role::VERSION = '0.009';
 use strict;
 use warnings;
 
@@ -15,7 +12,7 @@ use Moo::Role;
 use Carp;
 use Module::Runtime qw/ use_module /;
 use Regexp::Common;
-use Data::Record;
+use Text::ParseWords 'shellwords';
 use Module::Pluggable::Object;
 
 use List::Util qw/first/;
@@ -137,12 +134,8 @@ sub _initialize_from_cmd
 {
 	my ( $class, %params ) = @_;
 
-	my $opts_record = Data::Record->new({
-		split  => qr{\s+},
-		unless => $RE{quoted},
-	});
+	my @args = shellwords( join ' ', map { quotemeta } @ARGV );
 
-	my @args = $opts_record->records(join(' ',@ARGV));
 	my (@used_args, $cmd, $cmd_name);
 
 	my %cmd_create_params = %params;
@@ -155,15 +148,19 @@ sub _initialize_from_cmd
 		$cmd_name = $arg; # be careful about relics
 		use_module( $cmd );
 		defined $cmd_create_params{command_execute_method_name}
-		  or $cmd_create_params{command_execute_method_name} = $call_optional_method->($cmd, "_build_command_execute_method_name", \%cmd_create_params);
+		  or $cmd_create_params{command_execute_method_name} = $call_optional_method->(
+		    $cmd, "_build_command_execute_method_name", \%cmd_create_params);
 		defined $cmd_create_params{command_execute_method_name} 
 		  or $cmd_create_params{command_execute_method_name} = "execute";
 		$required_method->($cmd, $cmd_create_params{command_execute_method_name});
 		last;
 	}
 
-	defined $params{command_creation_chain_methods} or $params{command_creation_chain_methods} = $class->_build_command_creation_chain_methods(\%params);
-	my @creation_chain = _ARRAY($params{command_creation_chain_methods}) ? @{$params{command_creation_chain_methods}} : ($params{command_creation_chain_methods});
+	defined $params{command_creation_chain_methods}
+	  or $params{command_creation_chain_methods} = $class->_build_command_creation_chain_methods(\%params);
+	my @creation_chain = _ARRAY($params{command_creation_chain_methods})
+			   ? @{$params{command_creation_chain_methods}}
+			   : ($params{command_creation_chain_methods});
 	my $creation_method_name = first { defined $_ and $class->can($_) } @creation_chain;
 	croak "Can't find a creation method on " . $class unless $creation_method_name;
 	my $creation_method = $class->can($creation_method_name); # XXX this is a perfect candidate for a new function in List::MoreUtils
@@ -173,36 +170,37 @@ sub _initialize_from_cmd
 	$params{command_name} = $cmd_name;
 	defined $params{command_chain} or $params{command_chain} = [];
 	my $self = $creation_method->($class, %params);
-	$cmd and push @{$self->command_chain}, $self;
+	push @{$self->command_chain}, $self;
 
-	my @execute_return;
-
-	defined $params{command_execute_return_method_name}
-	  or $params{command_execute_return_method_name} = $class->_build_command_execute_return_method_name(\%params);
 	if ($cmd) {
 		@ARGV = @args;
 		my ($creation_method,$creation_method_name,$cmd_plugin);
 		$cmd->can("_build_command_creation_method_name") and $creation_method_name = $cmd->_build_command_creation_method_name(\%params);
 		$creation_method_name and $creation_method = $cmd->can($creation_method_name);
 		if ($creation_method) {
-			@cmd_create_params{qw(command_chain)} = @params{qw(command_chain)};
+			@cmd_create_params{qw(command_chain)} = @$self{qw(command_chain)};
 			$cmd_plugin = $creation_method->($cmd, %cmd_create_params);
-			@execute_return = @{ $call_indirect_method->($cmd_plugin, "command_execute_return_method_name") };
+			$self->{$self->command_execute_return_method_name} = [
+			    @{ $call_indirect_method->($cmd_plugin, "command_execute_return_method_name") } ];
 		} else {
 			$creation_method_name = first { $cmd->can($_) } @creation_chain;
 			croak "Can't find a creation method on " . $cmd unless $creation_method_name;
-			$creation_method = $cmd->can($creation_method_name); # XXX this is a perfect candidate for a new function in List::MoreUtils
+			# XXX this is a perfect candidate for a new function in List::MoreUtils
+			$creation_method = $cmd->can($creation_method_name);
 			$cmd_plugin = $creation_method->($cmd);
-			defined $params{command_execute_from_new} or $params{command_execute_from_new} = $class->_build_command_execute_from_new(\%params);
-			$params{command_execute_from_new}
-			  and @execute_return = $call_required_method->($cmd_plugin, $cmd_create_params{command_execute_method_name}, \@ARGV, $self->command_chain);
+			push @{$self->command_chain}, $cmd_plugin;
+
+			my $cemn = $cmd_plugin->can("command_execute_method_name");
+			my $exec_fun = $cemn ? $cemn->() : $self->command_execute_method_name();
+			$self->command_execute_from_new
+			  and $self->{$self->command_execute_return_method_name} = [
+			    $call_required_method->($cmd_plugin, $exec_fun, \@ARGV, $self->command_chain) ];
 		}
 	} else {
 		$self->command_execute_from_new
-		  and @execute_return = $call_indirect_method->($self, "command_execute_method_name", \@ARGV, $self->command_chain);
+		  and $self->{$self->command_execute_return_method_name} = [
+		    $call_indirect_method->($self, "command_execute_method_name", \@ARGV, $self->command_chain) ];
 	}
-
-	$self->{$params{command_execute_return_method_name}} = \@execute_return;
 
 	return $self;
 }
@@ -223,7 +221,7 @@ MooX::Cmd::Role - MooX cli app commands do this
 
 =head1 VERSION
 
-version 0.008
+version 0.009
 
 =head1 SYNOPSIS
 
