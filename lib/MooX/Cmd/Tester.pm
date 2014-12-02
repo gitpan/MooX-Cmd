@@ -1,9 +1,6 @@
 package MooX::Cmd::Tester;
-BEGIN {
-  $MooX::Cmd::Tester::AUTHORITY = 'cpan:GETTY';
-}
 # ABSTRACT: MooX cli app commands tester
-$MooX::Cmd::Tester::VERSION = '0.009';
+
 use strict;
 use warnings;
 
@@ -146,21 +143,6 @@ for my $attr (qw(app cmd stdout stderr output error execute_rv exit_code))
     }
 }
 
-
-1;
-
-__END__
-
-=pod
-
-=head1 NAME
-
-MooX::Cmd::Tester - MooX cli app commands tester
-
-=head1 VERSION
-
-version 0.009
-
 =head1 SYNOPSIS
 
   use MooX::Cmd::Tester;
@@ -228,7 +210,7 @@ return values from execute
 
 =head3 exit_code
 
-0 on sucess, $! when error occured and $! available, -1 otherwise
+0 on success, $! when error occurred and $! available, -1 otherwise
 
 =head2 test_cmd_ok
 
@@ -239,23 +221,29 @@ command_commands, etc.
 
 Returns the same object C<test_cmd> returns.
 
-If an error occured, no additional test is done (behavior as C<test_cmd>).
+If an error occurred, no additional test is done (behavior as C<test_cmd>).
+
+=head2 result_class
+
+Builder for result class to use. Returns C<MooX::Cmd::Tester::Result> by
+default.
 
 =head1 ACKNOWLEDGEMENTS
 
 MooX::Cmd::Tester is I<inspired> by L<App::Cmd::Tester> from Ricardo Signes.
-In fact, I resused the entire design and adopt it to the requirements of
+In fact, I reused the entire design and adopt it to the requirements of
 MooX::Cmd.
 
-=head1 AUTHOR
+=head1 LICENSE AND COPYRIGHT
 
-Torsten Raudssus <torsten@raudss.us>
+Copyright 2012-2013 Torsten Raudssus, Copyright 2013-2014 Jens Rehsack.
 
-=head1 COPYRIGHT AND LICENSE
+This program is free software; you can redistribute it and/or modify it
+under the terms of either: the GNU General Public License as published
+by the Free Software Foundation; or the Artistic License.
 
-This software is copyright (c) 2013 by Torsten Raudssus.
-
-This is free software; you can redistribute it and/or modify it under
-the same terms as the Perl 5 programming language system itself.
+See L<http://dev.perl.org/licenses/> for more information.
 
 =cut
+
+1;

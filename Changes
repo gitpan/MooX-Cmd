@@ -1,445 +1,94 @@
-==================================================
-Changes from 1740-04-26 00:00:00 +0000 to present.
-==================================================
+Revision history for Perl module MooX::Cmd
+
+0.010 2014-12-02
+    - switch distribution tooling from Dist::Zilla to ExtUtils::MakeMaker
+    - Added Changes file with content based on git log according to
+      CPAN::Changes::Spec (Neil Bowers)
+    - Apply typo fixes for documentation from David Steinbrunner
+    - Sven Schober provided heavily improved description
+
+0.009 2014-02-08
+    - Apply submitted fix for RT#91481 - without test ..
+    - fix RT#91500 - incorrect execute_return if ...
+      The implication was wrong, indeed - but the effort was increadible.
+      Testing sucks :P
+    - distinguish between test_cmd and test_cmd_ok
+    - after chained constructor, we can use getters
+    - add missing prereqs
+
+
+0.008 2013-11-13
+    - groundwork for testing with Mo(o(se))
+    - add THANKS section
+    - final test for MooX::Options 3.99
+    - eliminate hidden/private __moox_cmd_chain param
+    - massively increase test coverage
+
+
+0.007 2013-11-07
+    - improve test coverage of MooX::Cmd::Role
+    - 100% test coverage of MooX::Cmd
+    - add some documentation for MooX::Cmd::Tester
+    - ignore editor temp files and backup files
+    - enhance and fix tests
+    - Adopt basic tests using tester API
+    - steal some code from App::Cmd::Tester and adopt
+      Basic test infrastructure ... needs fine tuning, but first steps
+      are done that way.
+    - BAIL_OUT when unable to load MooX::Cmd
+      No further testing possible nor reasonable
+
+
+0.006001 2013-11-06
+    - remove superfluous "my" causing undef command_name
+
+
+0.006 2013-11-05
+    - Merge github.com:rehsack/MooX-Cmd
+
+
+0.005 2013-11-05
+    - Merge github.com:Getty/p5-moox-cmd into rehsack
+    - correct content of command_name attribute
+    - Merge github.com:Getty/p5-moox-cmd
+
+
+0.004 2013-11-02
+    - New travis config
+    - Add some comfort as primary author desires
+      To avoid scaring users the Getty wants some improved examples and an
+      accessor for last cmd in chain.
+    - Add some samples to role
+      author wants ('examples') x INT_MAX - unfortunately he gets only one
+    - Move initialization to MooX::Cmd::Role
+    - Improve documentation
+    - Allow Class->new_with_cmd->execute(...)
+    - Move initialization sequence for cmd into role
+      As discussed with primary author, a role having all neat information about
+      the cmd state in attributes is smarter that passing arguments ...
+    - Simplify loading commands to avoid stack frames
+    - Remove trailing \t
+    - Some safety first checks and minor optimizations
+    - Allow commands show available neighbours/children
+    - Merge github.com:Getty/p5-moox-cmd
+    - Merge pull request #2 from yanick/master
+      only load commands if used
+    - Bump Module::Pluggable version to stop 5.18 from
+      whining and let it work smoothly on blead
+
+
+0.003 2013-04-20
+    - Switched to Author::GETTY, added .travis.yml
+    - Don't load commands unless they are used
+      This should make things much more zippy if we have
+      more than a handful of commands.
+
+
+0.002 2012-05-07
+    - Added requirement for Package::Stash
+    - Added documentation (hope it works ;) as told hehe) and use of Package::Stash
+
+
+0.001 2012-02-10
+    - First release to CPAN
 
-------------------------------------------
-version 0.009 at 2014-02-08 16:00:22 +0000
-------------------------------------------
-
-  Change: 0abd26c7a29d6b2d9b225af320891f224194996a
-  Author: Diab Jerius <djerius@cpan.org>
-  Date : 2014-02-01 22:17:39 +0000
-
-    Apply submitted fix for RT#91481 - without test ..
-
-    but with dist.ini updated ... 
-
-  Change: 98feae23ad3c3caa679df82083d6db2daeb63900
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2014-02-01 22:06:58 +0000
-
-    fix RT#91500 - incorrect execute_return if ...
-
-    The implication was wrong, indeed - but the effort was increadible.
-    Testing sucks :P 
-
-  Change: 790ba58bc37a7104576c1bf741b98873e4562ae8
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2014-01-29 07:05:42 +0000
-
-    distinguish between test_cmd and test_cmd_ok 
-
-  Change: f3c3dfcb7586a2922702c91bad012acf0031ad9c
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2014-01-29 07:04:20 +0000
-
-    after chained constructor, we can use getters
-
-    * here: use command_execute_return_method_name getter instead of
-
-    hidden builder call and wasting the result 
-
-  Change: 6077f673f240f71bcdcd6e9e3cb09fef1de4ab2f
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-12-02 08:49:48 +0000
-
-    add missing prereqs 
-
-  Change: 9d651fd16851227b7010d79b969f4880e97dd066
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-13 16:45:57 +0000
-
-    groundwork for testing with Mo(o(se)) 
-
-  Change: 1d03792c66e861893a3c51991f24353ea7314e4c
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-13 11:14:00 +0000
-
-    add THANKS section 
-
-  Change: 13178346909c90cc22627066f699aa12c669fef2
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-13 11:13:32 +0000
-
-    final test for MooX::Options 3.99 
-
-  Change: 7a54a5793c90f20b2949d6c76eef67dd9550b478
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-13 10:50:12 +0000
-
-    eliminate hidden/private __moox_cmd_chain param 
-
-  Change: dae399076bca0401e75f7f23a4fbb09e04fb38eb
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-13 08:11:54 +0000
-
-    prepare for MooX::Options 3.99 
-
-  Change: f7e930f69532758bbec8ed9e542e7e3baddff655
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-09 22:20:42 +0000
-
-    massively increase test coverage 
-
-  Change: 4277fc1bfef1d923b359db3603feb9aab88d18b3
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-07 22:40:36 +0000
-
-    improve test coverage of MooX::Cmd::Role 
-
-  Change: 4cd5c44f71d2c97dbe30d5709fc3318d4682338f
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-07 20:52:35 +0000
-
-    100% test coverage of MooX::Cmd 
-
-  Change: 56155528d3463680214507d42a53c5132b3be967
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-07 17:14:00 +0000
-
-    add some documentation for MooX::Cmd::Tester 
-
-  Change: bcf96711d17f6f4ef2fca1c2ccb1372f9a08505d
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-07 15:34:46 +0000
-
-    ignore editor temp files and backup files 
-
-  Change: 47ac05970ee0cc83fd6e1bc13559f51c320cb498
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-07 15:33:32 +0000
-
-    enhance and fix tests 
-
-  Change: 638e1160066019da114e18858623bcb5f7cb272e
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-06 20:55:24 +0000
-
-    Adopt basic tests using tester API 
-
-  Change: 3b22c88ca15a3e98c9221bab12288cf62ce4c1c3
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-06 20:54:22 +0000
-
-    steal some code from App::Cmd::Tester and adopt
-
-    Basic test infrastructure ... needs fine tuning, but first steps are
-    done that way. 
-
-  Change: df7fae3c04dac8aba23a6dd693926cfd16a65fb4
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-06 20:53:40 +0000
-
-    BAIL_OUT when unable to load MooX::Cmd
-
-    No further testing possible nor reasonable 
-
-  Change: de7fcb9ab41a68831a8b1664c9d0f1830969014c
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-06 12:29:04 +0000
-
-    remove superfluous "my" causing undef command_name 
-
-  Change: 4396f43078223c989bd9c5cc2734191ebc295d2a
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-05 20:12:38 +0000
-
-    Merge github.com:rehsack/MooX-Cmd 
-
-  Change: c932a0edc9a0ab225b431f21a116af96becfcfa0
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-05 20:11:11 +0000
-
-    v0.005 
-
-  Change: fc393333b0f91e30fcc6a8168b67c076ada2c113
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-05 07:45:35 +0000
-
-    Merge github.com:Getty/p5-moox-cmd into rehsack 
-
-  Change: 25caa31cf72d62cc69eaaf207488ea93427c5e43
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-05 06:59:15 +0000
-
-    correct content of command_name attribute 
-
-  Change: ded34606747f067473f9b778b213a184a0e69e6e
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-03 00:04:10 +0000
-
-    Merge github.com:Getty/p5-moox-cmd 
-
-  Change: 474d456a510b53f357b96e346ba45160e554d0be
-  Author: Torsten Raudssus <torsten@raudss.us>
-  Date : 2013-11-02 23:06:50 +0000
-
-    New travis config 
-
-  Change: 7ad16ca45b63d72deb5db6cbbce4f787046f6013
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-02 23:00:05 +0000
-
-    add some comfort as primary author desires
-
-    To avoid scaring users the Getty wants some improved examples and an
-    accessor for last cmd in chain. 
-
-  Change: 3b7ea438bf9d041895b37781e3ea20733caa5e08
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-02 23:00:05 +0000
-
-    add some samples to role
-
-    author wants ('examples') x INT_MAX - unfortunately he gets only one 
-
-  Change: 16ab8ee5a435405b22a57c83b59bf2b6ce90ba5c
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-02 23:00:05 +0000
-
-    move initialization to MooX::Cmd::Role
-
-    * as discussed with Getty in #web-simple, let MooX::Cmd be a
-    bootstrap
-
-    loader only and modern implementations can do
-
-    with "MooX::Cmd::Role"; * allow modify all initialization parameters
-    via class _build_ functions
-
-    (called in class context, but as method) 
-
-  Change: e8b4dea42c571e7842f250b9d75bfc680dfe24ed
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-02 23:00:05 +0000
-
-    improve documentation 
-
-  Change: bd75c0701c52b3742a5c7aa53d7e058c6327d2e1
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-02 23:00:05 +0000
-
-    allow Class->new_with_cmd->execute(...) 
-
-  Change: 1e585ce9de10745e06d0399a9beaae4d090261d5
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-02 23:00:05 +0000
-
-    move initialization sequence for cmd into role
-
-    as discussed with primary author, a role having all neat information
-    about the cmd state in attributes is smarter that passing arguments
-    ... 
-
-  Change: 8be5fbb8369983ae1e225b5b9ee1130f13c34169
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-02 23:00:05 +0000
-
-    simplify loading commands to avoid stack frames 
-
-  Change: 08355a05811a3df9b044f69eed504aaa0180eba1
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-02 23:00:05 +0000
-
-    remove trailing \t 
-
-  Change: 11c618f8bfc0563cc5a5ca44fdcfbcb160054cdf
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-02 23:00:05 +0000
-
-    some safety first checks and minor optimizations 
-
-  Change: bfbe63ec3572c8b0c62c77288f4939b04e05dfb8
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-02 23:00:05 +0000
-
-    allow commands show available neighbours/children 
-
-  Change: 1368cf9f99b5b9496d9ae4e78ef7a04dd3cbe9ee
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-02 23:00:05 +0000
-
-    bump Module::Pluggable version to stop 5.18 from
-
-    whining and let it work smoothly on blead 
-
-  Change: ec640c1ba69d8e52a189767dfe3944d2fbcfdc1b
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-02 22:55:35 +0000
-
-    add some comfort as primary author desires
-
-    To avoid scaring users the Getty wants some improved examples and an
-    accessor for last cmd in chain. 
-
-  Change: 39ac03f9dade418d1c88f90eda86873fbf602b3e
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-01 13:08:20 +0000
-
-    add some samples to role
-
-    author wants ('examples') x INT_MAX - unfortunately he gets only one 
-
-  Change: e4b74eef3bdc5e6d9904f1357e70e82fc759f556
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-11-01 13:02:34 +0000
-
-    move initialization to MooX::Cmd::Role
-
-    * as discussed with Getty in #web-simple, let MooX::Cmd be a
-    bootstrap
-
-    loader only and modern implementations can do
-
-    with "MooX::Cmd::Role"; * allow modify all initialization parameters
-    via class _build_ functions
-
-    (called in class context, but as method) 
-
-  Change: 7b2cab573584ae6991298e6f8626a94312427c8d
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-10-31 20:38:00 +0000
-
-    improve documentation 
-
-  Change: 3a485f6effe485dc8f3f22617752e772b5e1a613
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-10-30 18:26:49 +0000
-
-    allow Class->new_with_cmd->execute(...) 
-
-  Change: 45b4c59e4f4b2467106a4546fdf6807176e978a5
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-10-30 18:21:16 +0000
-
-    move initialization sequence for cmd into role
-
-    as discussed with primary author, a role having all neat information
-    about the cmd state in attributes is smarter that passing arguments
-    ... 
-
-  Change: 707f86b6bb9a14d31865e7fa45d247d559b934cf
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-10-30 15:53:47 +0000
-
-    simplify loading commands to avoid stack frames 
-
-  Change: f0532663043704767fed5fcc40a7056f0bcedae6
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-10-30 15:36:42 +0000
-
-    remove trailing \t 
-
-  Change: bb0c7bbb48a20030a23b72d769f35845914a448d
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-10-30 15:31:14 +0000
-
-    some safety first checks and minor optimizations 
-
-  Change: 29a9d19b503186a872f4bc7a1c841cd593e86dd5
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-10-30 07:24:37 +0000
-
-    Merge github.com:Getty/p5-moox-cmd 
-
-  Change: 03139b6fb4c4fb003661ceefd3522183d822985f
-  Author: Torsten Raudssus <torsten@raudss.us>
-  Date : 2013-10-29 11:07:19 +0000
-
-    Merge pull request #2 from yanick/master
-
-    only load commands if used 
-
-  Change: 07158eec8defbbd90ece5286710d5eff98d647e1
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-10-29 18:36:10 +0000
-
-    allow commands show available neighbours/children 
-
-  Change: 6522c6e0fe8ef5af3ceb6495be735d02c44e081b
-  Author: Jens Rehsack <sno@netbsd.org>
-  Date : 2013-10-28 15:04:25 +0000
-
-    bump Module::Pluggable version to stop 5.18 from
-
-    whining and let it work smoothly on blead 
-
-  Change: 35958d42953eed37e26836cf5778bb077e614ecc
-  Author: Torsten Raudssus <torsten@raudss.us>
-  Date : 2013-04-21 01:24:58 +0000
-
-    Switched to Author::GETTY, added .travis.yml 
-
-  Change: 54be2bfe8fde08039f8e9587a0184083afcbcd55
-  Author: Yanick Champoux <yanick@babyl.dyndns.org>
-  Date : 2013-04-03 22:36:05 +0000
-
-    don't load commands unless they are used
-
-    this should make things much more zippy if we have more than a
-    handful of commands. 
-
-  Change: f70b220deeda4617bb30c67d93a96ac44fc3d780
-  Author: Torsten Raudssus <torsten@raudss.us>
-  Date : 2012-05-07 20:16:28 +0000
-
-    v0.002 
-
-  Change: 2541301dd44f5ee0ab752cb755d61d97c0872389
-  Author: Torsten Raudssus <torsten@raudss.us>
-  Date : 2012-05-07 20:15:55 +0000
-
-    Added requirement for Package::Stash 
-
-  Change: 8e659d1b5d517afa4839011575dc7f581c94b44a
-  Author: Torsten Raudssus <torsten@raudss.us>
-  Date : 2012-05-07 20:14:50 +0000
-
-    Added documentation (hope it works ;) as told hehe) and use of
-    Package::Stash 
-
-  Change: d49f4b4f81153f8b93caeab68a85fda28e0f5fc4
-  Author: Torsten Raudssus <github@raudssus.de>
-  Date : 2012-02-11 00:01:15 +0000
-
-    v0.001 
-
-  Change: 194c35d75b020347387d468ef27f13593821ef16
-  Author: Torsten Raudssus <github@raudssus.de>
-  Date : 2012-02-11 00:00:15 +0000
-
-    Added warning 
-
-  Change: 1557356c36859e34d7b6ec56c3ef45c5fc0f065d
-  Author: Torsten Raudssus <github@raudssus.de>
-  Date : 2012-02-10 23:59:29 +0000
-
-    Still under heavy development... i hate my life ;) 
-
-  Change: 90a859aa2a7295cc5a8e7a039a048a685b13e390
-  Author: Torsten Raudssus <github@raudssus.de>
-  Date : 2012-02-10 05:03:14 +0000
-
-    Ok.... that is not THAT easy ;) problem with command keyword 
-
-  Change: 61a6ef8cfde4a43755fc6edcd39781a666c19215
-  Author: Torsten Raudssus <github@raudssus.de>
-  Date : 2012-02-09 14:53:22 +0000
-
-    More parameters 
-
-  Change: 492701658ba8bf78eec1d8e6166f20ee01340647
-  Author: Torsten Raudssus <github@raudssus.de>
-  Date : 2012-02-09 14:36:56 +0000
-
-    Initial implementation, simple tests are working, stackable works 
-
-  Change: 5e5836b218405a040bc7ed25be3def4b182b5e14
-  Author: Torsten Raudssus <github@raudssus.de>
-  Date : 2012-02-07 19:27:13 +0000
-
-    initial commit 
-
-================
-End of releases.
-================
